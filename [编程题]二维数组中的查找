@@ -1,0 +1,56 @@
+//java
+public class Solution {
+    public boolean Find(int target, int [][] array) {
+        int row,column;
+        int rlen=array.length;//行数
+        int clen=array[0].length;//列数
+        //初始元素必须只能是左下角或右上角的元素
+        //若从左上角或右下角开始比较，每次删行或删列都会忽略一些元素
+        //从左下角或右上角的好处是，如右上角。
+        //右上角左边的元素都比key小，而右上角下边的元素都比key大。
+        //所以运用逼近的原则即可
+        
+        //第二种方法是每一行都使用二分查找，时间复杂度为nlogn。
+        for(row=0,column=clen-1;row<rlen&&column>=0;)
+        {
+            if(target==array[row][column])
+                return true;
+            if(target>array[row][column])
+            {
+                row++;
+                continue;
+            }
+            if(target<array[row][column])
+            {
+                column--;
+                continue;
+            }
+        }
+        return false;
+    }
+}
+/*
+链接：https://www.nowcoder.com/questionTerminal/abc3fe2ce8e146608e868a70efebf62e
+来源：牛客网
+
+public class Solution {
+    public boolean Find(int [][] array,int target) {
+         
+        for(int i=0;i<array.length;i++){
+            int low=0;
+            int high=array[i].length-1;
+            while(low<=high){
+                int mid=(low+high)/2;
+                if(target>array[i][mid])
+                    low=mid+1;
+                else if(target<array[i][mid])
+                    high=mid-1;
+                else
+                    return true;
+            }
+        }
+        return false;
+ 
+    }
+}
+*/
