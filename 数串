@@ -1,0 +1,77 @@
+题目描述
+设有n个正整数，将他们连接成一排，组成一个最大的多位整数。
+如:n=3时，3个整数13,312,343,连成的最大整数为34331213。
+如:n=4时,4个整数7,13,4,246连接成的最大整数为7424613。
+输入描述:
+有多组测试样例，每组测试样例包含两行，第一行为一个整数N（N<=100），第二行包含N个数(每个数不超过1000，空格分开)。
+输出描述:
+每组数据输出一个表示最大的整数。
+示例1
+输入
+2
+12 123
+4
+7 13 4 246
+输出
+12312
+7424613
+
+
+python版本：
+
+#coding=utf-8
+import sys
+#cmp用来比较a+b字符大还是b+a字符大，若b+a大的话返回True。表示需要调换位置
+def cmp(a,b):
+    if(int(a+b)<int(b+a)):
+        return True
+    else:
+        return False
+#以下三行为新学的获取输入的方法！！！
+nums=[]
+count=int(input())
+nums=input().split()
+
+#做一个二层for循环来遍历每一个数字组合是否需要调换位置
+for i in range(count):
+    for j in range(i + 1, count):
+        if(cmp(nums[i],nums[j])):
+            temp=nums[i]
+            nums[i]=nums[j]
+            nums[j]=temp
+print("".join(nums))
+
+C++版本：
+
+#include <iostream>
+#include <string>
+#include <vector>
+ 
+using namespace std;
+ 
+int main(){
+    int count;
+    while(cin>>count){//获取输入数字个数
+        vector<string> inputStrs;
+        string curInputStr;
+        for(int i = 0; i<count; ++i){//有count个数字就循环多少次
+            cin>>curInputStr;//获取当前输入的数字
+            inputStrs.push_back(curInputStr);//将获取的数字入数组
+        }
+             //用数组中第i个和后面count-i-1个值比较，每次都会把组合最大的那个数swap到i位（i初始=0）
+        for(int shift = 0; shift<inputStrs.size()-1; ++shift){//
+            for(int index = 0; index<inputStrs.size()-1-shift; ++index){
+                if((inputStrs[index]+inputStrs[index+1])<(inputStrs[index+1]+inputStrs[index])){
+                    //两个输入字符串相加之后 比较 哪个在前比较大。保留大的那个
+                swap(inputStrs[index],inputStrs[index+1]);
+                }
+            }
+        }
+     
+        for(string str: inputStrs){
+            cout<<str;//将inputStrs中的结果输出
+        }
+        cout<<endl;
+    }
+    return 0;
+}
