@@ -19,3 +19,47 @@ while(length!=-1):#因为要获取最后一个index为0，所以判断停止循�
     res.append(s[length][:])#将获倒置的值添加入res
     length-=1#每次都将length-1来完成遍历
 print(" ".join(res))#将list转换为str
+
+
+c++版本（别人用栈）：
+#include<iostream>
+#include<stack>
+#include<string>
+using namespace std;
+int main(){
+    string s;
+    stack<string> sstack;
+    while(cin>>s){
+        sstack.push(s);
+    }
+    while(sstack.size()!=1){
+        cout<<sstack.top()<<" ";
+        sstack.pop();
+    }
+    cout<<sstack.top()<<endl;
+    return 0;
+}
+
+c++版本（自己 通过50% 输出格式有问题）：
+#include<iostream>
+#include<vector>
+using namespace std;
+int main()
+{
+    string s;
+    getline(cin,s);
+    int len=s.length()-1;
+    //cout << s;
+    int pos=len;
+    for(int i=len;i>0;i--)
+    {
+        if (s[i]==' ')
+        {
+            //cout << "i,pos：" << i << pos;
+            cout << s.substr(i+1,pos-i) << ' ';
+            pos=i;
+        }
+    }
+    cout << s.substr(0,pos) <<endl;
+    return 0;
+}
